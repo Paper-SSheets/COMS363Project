@@ -1,0 +1,12 @@
+Project Part 1:
+	https://canvas.iastate.edu/courses/62253/assignments/920134
+	
+Project Part 2:
+	https://canvas.iastate.edu/courses/62253/assignments/920193
+	
+Team Project Description and Data:
+	https://canvas.iastate.edu/courses/62253/pages/team-project-description-and-data-3-students-per-team?module_item_id=2280578
+	
+ProjectInsert.sql Help Link:
+	https://dev.mysql.com/doc/refman/8.0/en/load-data.html
+
