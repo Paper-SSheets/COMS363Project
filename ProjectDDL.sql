@@ -1,7 +1,7 @@
-
-CREATE DATABASE IF NOT EXISTS 'group6'; 
+CREATE DATABASE IF NOT EXISTS group6; 
 
 USE group6; 
+
 
 DROP TABLE IF EXISTS user; 
 
@@ -12,10 +12,10 @@ CREATE TABLE user
      sub_category VARCHAR(50), 
      category     VARCHAR(50), 
      location     VARCHAR(50), 
+     state		  VARCHAR(2),
      followers    BIGINT, 
      following    BIGINT, 
-     PRIMARY KEY(screen_name), 
-     FOREIGN KEY(location) REFERENCES state(name) ON DELETE CASCADE 
+     PRIMARY KEY(screen_name)
   ); 
 
 DROP TABLE IF EXISTS tweet; 
@@ -29,24 +29,13 @@ CREATE TABLE tweet
      year          BIGINT, 
      text          VARCHAR(280), 
      retweet_count BIGINT, 
-     retweeted     BOOL, 
-     /* A bit is either 1, 0, or null. Good to use as a boolean. */ 
-     /* True or false can also be null - Dylan */ 
+     retweeted     BIT, 
      posting_user  VARCHAR(50), 
+     
      PRIMARY KEY(id), 
-     FOREIGN KEY(posting_user) REFERENCES user(screen_name) ON DELETE CASCADE 
+     FOREIGN KEY(posting_user) REFERENCES user(screen_name)
   ); 
-
-DROP TABLE IF EXISTS state; 
-
-CREATE TABLE state 
-  ( 
-     name        VARCHAR(2), 
-     screen_name VARCHAR(50), 
-     PRIMARY KEY(name), 
-     FOREIGN KEY(screen_name) REFERENCES user(screen_name) ON DELETE CASCADE 
-  ); 
-
+  
 DROP TABLE IF EXISTS url; 
 
 CREATE TABLE url 
@@ -64,5 +53,5 @@ CREATE TABLE hashtag
      name     VARCHAR(50), 
      tweet_id BIGINT, 
      PRIMARY KEY(name), 
-     FOREIGN KEY(id) REFERENCES tweet(id) 
+     FOREIGN KEY(tweet_id) REFERENCES tweet(id) 
   ); 
