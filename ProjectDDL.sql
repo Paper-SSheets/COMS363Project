@@ -38,11 +38,12 @@ CREATE TABLE tweet
 CREATE TABLE IF EXISTS state
 (
     name VARCHAR(2),
-    screen_name VARCHAR(50),
+    screen_name VARCHAR(50)
 
     PRIMARY KEY(name),
     FOREIGN KEY(screen_name) REFERENCES user(screen_name) ON DELETE CASCADE
-)
+);
+
 CREATE TABLE IF EXISTS url
     (
         address VARCHAR(50),
@@ -51,7 +52,7 @@ CREATE TABLE IF EXISTS url
         PRIMARY KEY(address),
         FOREIGN KEY(tweet_id) REFERENCES tweet(id) ON DELETE CASCADE
 
-    )
+    );
 
 CREATE TABLE IF EXISTS hashtag
 (
@@ -60,6 +61,4 @@ CREATE TABLE IF EXISTS hashtag
 
     PRIMARY KEY(name),
     FOREIGN KEY(id) REFERENCES tweet(id) ON DELETE CASCADE
-)
-
-
+);
