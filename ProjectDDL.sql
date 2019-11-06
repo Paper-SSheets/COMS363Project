@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS 'group6'; 
 
 USE group6; 
