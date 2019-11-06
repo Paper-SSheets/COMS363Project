@@ -1,13 +1,8 @@
-CREATE DATABASE IF NOT EXISTS group6; 
+DROP DATABASE IF EXISTS group6; 
+
+CREATE DATABASE group6; 
 
 USE group6; 
-
-
-DROP TABLE IF EXISTS state;
-
-
-
-DROP TABLE IF EXISTS user; 
 
 CREATE TABLE user 
   ( 
@@ -16,13 +11,11 @@ CREATE TABLE user
      sub_category VARCHAR(50), 
      category     VARCHAR(50), 
      location     VARCHAR(50), 
-     state		  VARCHAR(2),
+     state        VARCHAR(2), 
      followers    BIGINT, 
      following    BIGINT, 
-     PRIMARY KEY(screen_name)
+     PRIMARY KEY(screen_name) 
   ); 
-
-DROP TABLE IF EXISTS tweet; 
 
 CREATE TABLE tweet 
   ( 
@@ -35,12 +28,9 @@ CREATE TABLE tweet
      retweet_count BIGINT, 
      retweeted     BIT, 
      posting_user  VARCHAR(50), 
-     
      PRIMARY KEY(id), 
-     FOREIGN KEY(posting_user) REFERENCES user(screen_name)
+     FOREIGN KEY(posting_user) REFERENCES user(screen_name) 
   ); 
-  
-DROP TABLE IF EXISTS url; 
 
 CREATE TABLE url 
   ( 
@@ -50,16 +40,10 @@ CREATE TABLE url
      FOREIGN KEY(tweet_id) REFERENCES tweet(id) ON DELETE CASCADE 
   ); 
 
-DROP TABLE IF EXISTS hashtag; 
-
 CREATE TABLE hashtag 
   ( 
      name     VARCHAR(50), 
      tweet_id BIGINT, 
      PRIMARY KEY(name), 
-
      FOREIGN KEY(tweet_id) REFERENCES tweet(id) 
   ); 
-
-  
-
