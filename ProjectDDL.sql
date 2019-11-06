@@ -1,6 +1,14 @@
-CREATE DATABASE IF NOT EXISTS 'group6'; 
+CREATE DATABASE IF NOT EXISTS group6; 
 
 USE group6; 
+
+DROP TABLE IF EXISTS state;
+
+CREATE TABLE state
+(
+	name VARCHAR(50),
+    primary key(name)
+);
 
 DROP TABLE IF EXISTS user; 
 
@@ -65,3 +73,4 @@ CREATE TABLE hashtag
      PRIMARY KEY(name), 
      FOREIGN KEY(id) REFERENCES tweet(id) 
   ); 
+  
