@@ -14,7 +14,7 @@ CREATE TABLE user
      followers    BIGINT,
      following    BIGINT,
      PRIMARY KEY(screen_name),
-     FOREIGN KEY(location) REFERENCES state(name)
+     FOREIGN KEY(location) REFERENCES state(name) on DELETE CASCADE
   );
 
 DROP TABLE IF EXISTS tweet;
@@ -35,30 +35,35 @@ CREATE TABLE tweet
      PRIMARY KEY(id),
      FOREIGN KEY(posting_user) REFERENCES user(screen_name) ON DELETE CASCADE
   );
-CREATE TABLE IF EXISTS state
+  
+  DROP TABLE IF EXISTS state;
+  
+CREATE TABLE  state
 (
     name VARCHAR(2),
-    screen_name VARCHAR(50)
+    screen_name VARCHAR(50),
 
     PRIMARY KEY(name),
     FOREIGN KEY(screen_name) REFERENCES user(screen_name) ON DELETE CASCADE
 );
 
-CREATE TABLE IF EXISTS url
+DROP TABLE IF EXISTS url;
+CREATE TABLE url
     (
         address VARCHAR(50),
-        tweet_id BIGINT
+        tweet_id BIGINT,
 
         PRIMARY KEY(address),
         FOREIGN KEY(tweet_id) REFERENCES tweet(id) ON DELETE CASCADE
 
     );
 
-CREATE TABLE IF EXISTS hashtag
+DROP TABLE IF EXISTS hashtag;
+CREATE TABLE hashtag
 (
     name VARCHAR(50),
-    tweet_id BIGINT
+    tweet_id BIGINT,
 
     PRIMARY KEY(name),
-    FOREIGN KEY(id) REFERENCES tweet(id) ON DELETE CASCADE
+    FOREIGN KEY(id) REFERENCES tweet(id)
 );
