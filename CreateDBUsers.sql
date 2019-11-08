@@ -1,4 +1,4 @@
-CREATE DATABASEIF NOT EXISTS `group33`;
+CREATE DATABASE IF NOT EXISTS group6;
 
 CREATE USER IF NOT EXISTS 'cs363'@'%1' 
 
@@ -9,10 +9,10 @@ GRANT
 	CREATE,
 	INSERT, 
 	DELETE 
-	ON group33.* 
+	ON group6.* 
 		TO 'cs363'@'%1';
 
-USE group33;
+USE group6;
 
 CREATE USER IF NOT EXISTS 'cs363'@'%1' 
 
@@ -23,6 +23,6 @@ IDENTIFIED BY 'cs363pak';
 	CREATE, 
 	INSERT, 
 	DELETE 
-		ON group33.* 
+		ON group6.* 
 		TO 'cs363'@'%1';
 		
