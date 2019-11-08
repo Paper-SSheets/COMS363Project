@@ -76,20 +76,20 @@ CREATE TABLE mentioned
 delimiter ||
 
 CREATE TRIGGER `load_new_hashtag` 
-BEFORE INSERT ON tagged FOR EACH ROW 
+BEFORE INSERT ON `tagged` FOR EACH ROW 
 BEGIN IF (SELECT count(*) FROM hashtag WHERE hashtag.name=NEW.hashtag) = 0 
 THEN INSERT INTO hashtag(name) VALUES(NEW.hashtag); 
 END IF;
 END;||
 
 CREATE TRIGGER `delete_hashtag` 
-BEFORE DELETE ON tagged FOR EACH ROW 
+BEFORE DELETE ON `tagged` FOR EACH ROW 
 BEGIN IF (SELECT count(*) FROM tagged WHERE tagged.hashtag=OLD.hashtag) <= 1 THEN
 DELETE FROM hashtag WHERE OLD.hashtag=hashtag.name; END IF;
 END;||
 
 CREATE TRIGGER `load_new_url` 
-BEFORE INSERT ON url_used FOR EACH ROW
+BEFORE INSERT ON `url_used` FOR EACH ROW
 BEGIN IF (SELECT count(*) FROM url WHERE url.address=NEW.url) = 0 
 THEN INSERT INTO url(address) VALUES(NEW.url);
 END IF; 
