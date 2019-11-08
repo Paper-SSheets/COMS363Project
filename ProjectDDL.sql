@@ -105,4 +105,5 @@ THEN DELETE FROM url WHERE OLD.url=url.address;
 END IF;
 END;||
 
-delimiter ;*/
+delimiter ;
+*/
