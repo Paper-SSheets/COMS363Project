@@ -23,7 +23,7 @@ VALUES
 INSERT INTO appusers 
 VALUES 
   (
-    guestuser, 
+    'guestuser', 
     Sha1('Group6!@cs363'), 
     'readonly'
   );
