@@ -43,7 +43,17 @@ CREATE TABLE url
 CREATE TABLE hashtag 
   ( 
      name     VARCHAR(50), 
-     tweet_id BIGINT, 
-     PRIMARY KEY(name), 
-     FOREIGN KEY(tweet_id) REFERENCES tweet(id) 
+     PRIMARY KEY(name)
   ); 
+  
+  CREATE TABLE mentioned
+  (
+	uscreen_name	VARCHAR(50),
+    tid				BIGINT,
+    PRIMARY KEY(uscreen_name, tid),
+    FOREIGN KEY(uscreen_name) REFERENCES user(screen_name),
+    FOREIGN KEY(tid) REFERENCES tweet(id)
+  );
+
+  
+  
