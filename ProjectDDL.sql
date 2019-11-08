@@ -73,6 +73,9 @@ CREATE TABLE mentioned
     FOREIGN KEY(tid) REFERENCES tweet(id)
   );
 
+/*
+Unable to get fully working.
+
 delimiter ||
 
 CREATE TRIGGER `load_new_hashtag` 
@@ -102,4 +105,4 @@ THEN DELETE FROM url WHERE OLD.url=url.address;
 END IF;
 END;||
 
-delimiter ;
+delimiter ;*/
