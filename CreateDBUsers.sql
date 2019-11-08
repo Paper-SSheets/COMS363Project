@@ -1,13 +1,28 @@
-CREATE DATABASE IF NOT EXISTS group6;
-use group6;
+CREATE DATABASEIF NOT EXISTS `group33`;
 
-CREATE USER IF NOT EXISTS 'cs363' @'%1' 
-	IDENTIFIED WITH mysql_native_password BY 'cs363pak';
+CREATE USER IF NOT EXISTS 'cs363'@'%1' 
 
+IDENTIFIED WITH mysql_native_password BY 'cs363pak';
 GRANT 
-  view, 
-  drop, 
-  create, 
-  insert, 
-  delete 
-	ON group6.* TO 'cs363' @'%1';
+	VIEW,
+	DROP,
+	CREATE,
+	INSERT, 
+	DELETE 
+	ON group33.* 
+		TO 'cs363'@'%1';
+
+USE group33;
+
+CREATE USER IF NOT EXISTS 'cs363'@'%1' 
+
+IDENTIFIED BY 'cs363pak';
+	GRANT
+	SELECT, 
+	DROP, 
+	CREATE, 
+	INSERT, 
+	DELETE 
+		ON group33.* 
+		TO 'cs363'@'%1';
+		
