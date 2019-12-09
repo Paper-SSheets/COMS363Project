@@ -27,7 +27,7 @@ CREATE TABLE tweet
      text          VARCHAR(280),
      retweet_count BIGINT,
      retweeted     BIT,
-     posting_user  VARCHAR(50),
+     posting_user  VARCHAR(50) NOT NULL, /* Fixed based on Canvas comment. */
      PRIMARY KEY(id),
      FOREIGN KEY(posting_user) REFERENCES user(screen_name)
   );
@@ -36,14 +36,16 @@ CREATE TABLE url
   (
      address  VARCHAR(50),
      tweet_id BIGINT,
-     PRIMARY KEY(address),
+     PRIMARY KEY(address, tweet_id), /* Fixed based on Canvas comment. */
      FOREIGN KEY(tweet_id) REFERENCES tweet(id) ON DELETE CASCADE
   );
 
 CREATE TABLE hashtag
   (
      name VARCHAR(50),
-     PRIMARY KEY(name)
+     tweet_id BIGINT,
+     PRIMARY KEY(name, tweet_id),
+     FOREIGN KEY(tweet_id) REFERENCES tweet(id) ON DELETE CASCADE
   );
 
 CREATE TABLE mentioned
