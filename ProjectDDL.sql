@@ -10,8 +10,7 @@ CREATE TABLE user
      screen_name  VARCHAR(50),
      sub_category VARCHAR(50),
      category     VARCHAR(50),
-     location     VARCHAR(50),
-     state        VARCHAR(2),
+     state        VARCHAR(50),
      followers    BIGINT,
      following    BIGINT,
      PRIMARY KEY(screen_name)
