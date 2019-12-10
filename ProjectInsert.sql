@@ -1,50 +1,44 @@
 USE group6;
 
-/* 	--secure-file-priv option so it cannot execute these statements 
-	EVEN THOUGH, I have this option set to null in .ini file.	*/
-
-/* LOAD DATA INFILE './dataCSV/user.csv' */
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dataCSV/user.csv'
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/user.csv'
 INTO TABLE user
-COLUMNS TERMINATED BY ';'
+FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY '"'
-ESCAPED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(screen_name, name, sub_category, category, state, followers, following);
+(screen_name, dname, sub_category, category, 
+ state_name, num_followers, num_following);
 
-/* LOAD DATA INFILE './dataCSV/urlused.csv' */
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dataCSV/urlused.csv'
-INTO TABLE url
-COLUMNS TERMINATED BY ';'
-OPTIONALLY ENCLOSED BY '"'
-ESCAPED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
-
-/* LOAD DATA INFILE './dataCSV/tweets.csv' */
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dataCSV/tweets.csv'
 INTO TABLE tweet
-COLUMNS TERMINATED BY ';'
+FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY '"'
-ESCAPED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(tid, tweet_text, retweet_count, 
+ retweeted, created_at, uscreen_name);
 
-/* LOAD DATA INFILE './dataCSV/tagged.csv' */
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/uploads/dataCSV/urlused.csv'
+INTO TABLE Url_used
+FIELDS TERMINATED BY ';' 
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(tid, url);
+ 
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dataCSV/tagged.csv'
-INTO TABLE hashtag
-COLUMNS TERMINATED BY ';'
+INTO TABLE tagged
+FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY '"'
-ESCAPED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(tid, hashtag);
 
-/* LOAD DATA INFILE './dataCSV/mentioned.csv' */
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dataCSV/mentioned.csv'
 INTO TABLE mentioned
-COLUMNS TERMINATED BY ';'
+FIELDS TERMINATED BY ';' 
 OPTIONALLY ENCLOSED BY '"'
-ESCAPED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
+IGNORE 1 LINES
+(@Col1, uscreen_name)
+set tid = @Col1;

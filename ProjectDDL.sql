@@ -1,110 +1,118 @@
-DROP DATABASE IF EXISTS group6;
+DROP TABLE IF EXISTS group6; 
 
-CREATE DATABASE group6;
+CREATE DATABASE IF NOT EXISTS group6; 
 
-USE group6;
+USE group6; 
 
-CREATE TABLE user
-  (
-     name         VARCHAR(50),
-     screen_name  VARCHAR(50),
-     sub_category VARCHAR(50),
-     category     VARCHAR(50),
-     state        VARCHAR(50),
-     followers    BIGINT,
-     following    BIGINT,
-     PRIMARY KEY(screen_name)
-  );
+SET foreign_key_checks=0; 
 
-CREATE TABLE tweet
-  (
-     id            BIGINT,
-     created_at    DATE,
-     day           VARCHAR(31),
-     month         VARCHAR(12),
-     year          BIGINT,
-     text          VARCHAR(280),
-     retweet_count BIGINT,
-     retweeted     BIT,
-     posting_user  VARCHAR(50) NOT NULL, /* Fixed based on Canvas comment. */
-     PRIMARY KEY(id),
-     FOREIGN KEY(posting_user) REFERENCES user(screen_name)
-  );
+DROP TABLE IF EXISTS user; 
 
-CREATE TABLE url
-  (
-     address  VARCHAR(50),
-     tweet_id BIGINT,
-     PRIMARY KEY(address, tweet_id), /* Fixed based on Canvas comment. */
-     FOREIGN KEY(tweet_id) REFERENCES tweet(id) ON DELETE CASCADE
-  );
+CREATE TABLE user 
+  ( 
+     screen_name   VARCHAR(15), 
+     dname         VARCHAR(50), 
+     sub_category  VARCHAR(8), 
+     category      VARCHAR(22), 
+     state_name    VARCHAR(50), 
+     num_followers BIGINT, 
+     num_following BIGINT, 
+     PRIMARY KEY(screen_name) 
+  ); 
 
-CREATE TABLE hashtag
-  (
-     name VARCHAR(50),
-     tweet_id BIGINT,
-     PRIMARY KEY(name, tweet_id),
-     FOREIGN KEY(tweet_id) REFERENCES tweet(id) ON DELETE CASCADE
-  );
+DROP TABLE IF EXISTS tweet; 
 
-CREATE TABLE mentioned
-  (
-     uscreen_name VARCHAR(50),
-     tid          BIGINT,
-     PRIMARY KEY(uscreen_name, tid),
-     FOREIGN KEY(uscreen_name) REFERENCES user(screen_name),
-     FOREIGN KEY(tid) REFERENCES tweet(id)
-  );
+CREATE TABLE tweet 
+  ( 
+     tid           BIGINT, 
+     tweet_text    VARCHAR(280), 
+     retweeted     INT, 
+     retweet_count BIGINT, 
+     created_at    DATE, 
+     uscreen_name  VARCHAR(15) NOT NULL, 
+     PRIMARY KEY(tid), 
+     FOREIGN KEY(uscreen_name) REFERENCES user(screen_name) ON DELETE CASCADE 
+  ); 
 
-  CREATE TABLE url_used
-  (
-	address  	VARCHAR(50),
-	tid 		BIGINT,
-    PRIMARY KEY(address, tid),
-    FOREIGN KEY(address) REFERENCES url(address),
-    FOREIGN KEY(tid) REFERENCES tweet(id)
-  );
+DROP TABLE IF EXISTS url; 
 
-  CREATE TABLE tagged
-  (
-	name  		VARCHAR(50),
-	tid 		BIGINT,
-    PRIMARY KEY(name, tid),
-    FOREIGN KEY(name) REFERENCES hashtag(name),
-    FOREIGN KEY(tid) REFERENCES tweet(id)
-  );
+CREATE TABLE url 
+  ( 
+     address VARCHAR(500), 
+     PRIMARY KEY(address) 
+  ); 
 
-/*
-Unable to get fully working.
+DROP TABLE IF EXISTS hashtag; 
 
-delimiter ||
+CREATE TABLE hashtag 
+  ( 
+     hname VARCHAR(280), 
+     PRIMARY KEY(hname) 
+  ); 
 
-CREATE TRIGGER `load_new_hashtag`
-BEFORE INSERT ON `tagged` FOR EACH ROW
-BEGIN IF (SELECT count(*) FROM hashtag WHERE hashtag.name=NEW.hashtag) = 0
-THEN INSERT INTO hashtag(name) VALUES(NEW.hashtag);
+DROP TABLE IF EXISTS mentioned; 
+
+CREATE TABLE mentioned 
+  ( 
+     uscreen_name VARCHAR(15), 
+     tid          BIGINT, 
+     PRIMARY KEY(uscreen_name, tid), 
+     FOREIGN KEY(uscreen_name) REFERENCES user(screen_name) ON DELETE CASCADE, 
+     FOREIGN KEY(tid) REFERENCES tweet(tid) ON DELETE CASCADE 
+  ); 
+
+DROP TABLE IF EXISTS url_used; 
+
+CREATE TABLE url_used 
+  ( 
+     tid BIGINT, 
+     url VARCHAR(500), 
+     PRIMARY KEY(tid, url), 
+     FOREIGN KEY(tid) REFERENCES tweet(tid) ON DELETE CASCADE, 
+     FOREIGN KEY(url) REFERENCES url(address) ON DELETE CASCADE 
+  ); 
+
+DROP TABLE IF EXISTS tagged; 
+
+CREATE TABLE tagged 
+  ( 
+     tid     BIGINT, 
+     hashtag VARCHAR(280), 
+     PRIMARY KEY(tid, hashtag), 
+     FOREIGN KEY(tid) REFERENCES tweet(tid) ON DELETE CASCADE, 
+     FOREIGN KEY(hashtag) REFERENCES hashtag(hname) ON DELETE CASCADE 
+  ); 
+
+SET foreign_key_checks=1; 
+
+delimiter //
+
+CREATE TRIGGER `load_url` BEFORE INSERT ON `Url_Used` FOR EACH ROW
+BEGIN
+IF (SELECT count(*) FROM Url WHERE Url.address=NEW.url) = 0 THEN
+INSERT INTO Url(address) VALUES(NEW.url);
 END IF;
-END;||
+END;//
 
-CREATE TRIGGER `delete_hashtag`
-BEFORE DELETE ON `tagged` FOR EACH ROW
-BEGIN IF (SELECT count(*) FROM tagged WHERE tagged.hashtag=OLD.hashtag) <= 1 THEN
-DELETE FROM hashtag WHERE OLD.hashtag=hashtag.name; END IF;
-END;||
-
-CREATE TRIGGER `load_new_url`
-BEFORE INSERT ON `url_used` FOR EACH ROW
-BEGIN IF (SELECT count(*) FROM url WHERE url.address=NEW.url) = 0
-THEN INSERT INTO url(address) VALUES(NEW.url);
+CREATE TRIGGER `delete_url` BEFORE DELETE ON `Url_Used` FOR EACH ROW
+BEGIN
+IF (SELECT count(*) FROM Url_Used WHERE Url_Used.url=OLD.url) <= 1 THEN
+DELETE FROM Url WHERE OLD.url=Url.address;
 END IF;
-END;||
-
-CREATE TRIGGER `delete_url`
-BEFORE DELETE ON `url_used` FOR EACH ROW
-BEGIN IF (SELECT count(*) FROM url_used WHERE url_used.url=OLD.url) <= 1
-THEN DELETE FROM url WHERE OLD.url=url.address;
+END;//
+   
+CREATE TRIGGER `load_hashtag` BEFORE INSERT ON `Tagged` FOR EACH ROW
+BEGIN
+IF (SELECT count(*) FROM Hashtag WHERE Hashtag.hname=NEW.hashtag) = 0 THEN
+INSERT INTO Hashtag(hname) VALUES(NEW.hashtag);
 END IF;
-END;||
+END;//
 
+CREATE TRIGGER `delete_hashtag` BEFORE DELETE ON `Tagged` FOR EACH ROW
+BEGIN
+IF (SELECT count(*) FROM Tagged WHERE Tagged.hashtag=OLD.hashtag) <= 1 THEN
+            DELETE FROM Hashtag WHERE OLD.hashtag=Hashtag.hname;
+END IF;
+END;//
+   
 delimiter ;
-*/
