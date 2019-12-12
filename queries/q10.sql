@@ -1,4 +1,16 @@
 /* Q10 */
+/* 
+	Find the list of distinct hashtags that appeared in one of 
+	the states in a given list in a given month of a given year;
+	show the list of the hashtags and the names of the states in 
+	which they appeared.
+	
+	Input: list of states, (e.g., [Ohio, Alaska, Alabama]), month, year
+	
+	Rationale: This is to find common interests among the users in the states of interest.
+	
+	• The value of k is between 1 and 100.
+*/
 SELECT hname, 
        Group_concat(DISTINCT ofstate) AS all_the_states 
 FROM   hashtag
