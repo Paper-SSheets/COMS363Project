@@ -1,13 +1,13 @@
-/* Finds k hashtags that appeared in the most number of states
-in a given year; lists the total number of states the hashtag
-appeared, the distict states it appeared, and the hashtag itself
-in descending order of the number of states the hashtag appeared */
-
-SELECT retweet_count, textbody, user.screen_name, category, sub_category
-FROM tweet
-INNER JOIN user on tweet.screen_name = user.screen_name
-WHERE YEAR(tweet.posted) = ?
-AND tid in
-    (SELECT tid from tweet_hashtag
-     WHERE hname = ? )
-ORDER BY retweet_count DESC limit ?;
+/* Q3 */ 
+SELECT hname, 
+       Count(DISTINCT ofstate)        AS number_of_states, 
+       Group_concat(DISTINCT ofstate) AS states_list 
+FROM   hashtag 
+       INNER JOIN tweet 
+               ON hashtag.tid = tweet.tid 
+       INNER JOIN user 
+               ON tweet.screen_name = user.screen_name 
+WHERE  Year(tweet.posted) = 2016
+GROUP  BY hname 
+ORDER  BY number_of_states DESC 
+LIMIT  10; 
