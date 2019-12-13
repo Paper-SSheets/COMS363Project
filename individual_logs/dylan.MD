@@ -1,0 +1,1 @@
+# 12/12/2019 - Created queries 9, 11, 18 and 23 in neo 4j (5 hours)

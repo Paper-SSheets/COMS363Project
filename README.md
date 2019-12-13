@@ -1,3 +1,3 @@
 # COMS363Project
 
-This is hard. :(
+This is hard. :()
