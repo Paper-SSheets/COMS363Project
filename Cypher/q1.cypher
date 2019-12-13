@@ -6,4 +6,3 @@
 q1.)
 match (t:Tweet)<-[:POSTED]-(u:User) WHERE t.year='2016' AND t.month='1' RETURN tointeger(t.retweet_count), t.text, u.screen_name, u.category, u.sub_category ORDER BY tointeger(t.retweet_count) DESC limit 5
 
-q2.)
