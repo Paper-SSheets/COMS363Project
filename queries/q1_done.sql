@@ -3,7 +3,7 @@
 	List k most retweeted tweets in a given month and a given year; 
 	show the retweet count, the tweet text, the posting user’s screen name, 
 	the posting user’s category, the posting user’s sub-category in 
-	descending order of the retweet count values 
+	descending order of the retweet count values. 
 	
 	Input: Value of k (e.g., 10), month (e.g., 1), and year (e.g., 2016) 
 	

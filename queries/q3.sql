@@ -19,14 +19,29 @@
 	• The value of k is between 1 and 100.
 */
 SELECT hname, 
-       Count(DISTINCT ofstate)        AS number_of_states, 
-       Group_concat(DISTINCT ofstate) AS states_list 
+       Count(DISTINCT state_name)        AS number_of_states, 
+       Group_concat(DISTINCT state_name) AS states_list 
 FROM   hashtag 
        INNER JOIN tweet 
                ON hashtag.tid = tweet.tid 
        INNER JOIN user 
-               ON tweet.screen_name = user.screen_name 
-WHERE  Year(tweet.posted) = 2016
+               ON tweet.uscreen_name = user.screen_name 
+WHERE  Year(tweet.created_at) = 2016
 GROUP  BY hname 
 ORDER  BY number_of_states DESC 
 LIMIT  10; 
+
+/*	Fix.
+	SELECT hashtagname, 
+		   Count(DISTINCT ofstate)        AS number_of_states, 
+		   Group_concat(DISTINCT ofstate) AS states_list 
+	FROM   tweet_hashtag 
+		   INNER JOIN tweet 
+				   ON tweet_hashtag.tid = tweet.tid 
+		   INNER JOIN user 
+				   ON tweet.screen_name = user.screen_name 
+	WHERE  Year(tweet.posted) = ? 
+	GROUP  BY hashtagname 
+	ORDER  BY number_of_states DESC 
+	LIMIT  10; 
+*/
