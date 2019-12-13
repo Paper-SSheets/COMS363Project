@@ -8,5 +8,6 @@ match ((u:User)-[:POSTED]->(t:Tweet)-[r:MENTIONED]->(m:User))
 optional match((m)-[:FROM]->(c:State)) 
 with u,t,r,m,c 
 where u.sub_category="GOP" and m.screen_name<>''
-and t.year="2016" and t.month='1' with count(distinct(r)) as num, m.screen_name as mentionedUser, c.name as stateOfMentionedUser, collect(distinct(u.screen_name)) as listMentioningUsers return mentionedUser, stateOfMentionedUser, listMentioningUsers
+and t.year="2016" and t.month='1' with count(distinct(r)) as num, m.screen_name as mentionedUser, c.name as stateOfMentionedUser, collect(distinct(u.screen_name)) as listMentioningUsers 
+return mentionedUser, stateOfMentionedUser, listMentioningUsers
 order by num desc limit 5
