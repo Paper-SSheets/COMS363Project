@@ -25,7 +25,7 @@ FROM   user u
                ON h.hname = tag.hashtag 
 WHERE  Find_in_set(h.hname, @hashtags) 
 GROUP  BY u.screen_name 
-ORDER  BY u.numfollowers DESC 
+ORDER  BY u.num_followers DESC 
 LIMIT  5; /* User input here. */
 
 
