@@ -9,11 +9,11 @@
 	
 	• The value of k is between 1 and 100.
 */
-SET @subcategory = 'GOP'; 
+SET @subcategory = 'GOP'; /* User input here */
 
-SET @months = '1, 2, 3'; 
+SET @months = '1, 2, 3'; /* User input here */
 
-SET @year = '2016'; 
+SET @year = '2016'; /* User input here */
 
 SELECT h.hname                                               AS hashtag_text, 
        Count(tag.hashtag)                                    AS num_uses, 
@@ -32,7 +32,7 @@ WHERE  u.sub_category = @subcategory && Find_in_set(Month(
        AND Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year 
 GROUP  BY h.hname 
 ORDER  BY num_uses DESC 
-LIMIT  5; 
+LIMIT  5; /* User input here */
 
 
 /*	Fix.

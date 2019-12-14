@@ -10,11 +10,11 @@
 	
 	• The value of k is between 1 and 100.
 */
-SET @subcategory = 'GOP'; 
+SET @subcategory = 'GOP'; /* User input here */
 
-SET @month = '1'; 
+SET @month = '1'; /* User input here */
 
-SET @year = '2016'; 
+SET @year = '2016'; /* User input here */
 
 SELECT mentU.screen_name                                    AS mentionedUser, 
        mentU.state_name                                     AS 
@@ -32,4 +32,4 @@ WHERE  ownU.sub_category = @subcategory
        AND Month(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @month 
 GROUP  BY mentU.screen_name 
 ORDER  BY Count(ment.uscreen_name) DESC 
-LIMIT  5; 
+LIMIT  5; /* User input here */

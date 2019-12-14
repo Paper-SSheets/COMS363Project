@@ -11,7 +11,7 @@
 	
 	• The value of k is between 1 and 100.
 */
-SET @subcategory = 'GOP'; 
+SET @subcategory = 'GOP'; /* User input here */
 
 SELECT u.screen_name, 
        u.sub_category, 
@@ -19,4 +19,4 @@ SELECT u.screen_name,
 FROM   user u 
 WHERE  u.sub_category = @subcategory 
 ORDER  BY u.numfollowers DESC 
-LIMIT  5; 
+LIMIT  5; /* User input here */

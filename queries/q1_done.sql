@@ -31,7 +31,7 @@ SELECT *
 FROM   tweet t 
        INNER JOIN user u 
                ON t.uscreen_name = u.screen_name 
-WHERE  Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = "2016" 
-       AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = "2" 
+WHERE  Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = "2016" /* User input here */
+       AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = "2" /* User input here */
 ORDER  BY t.retweet_count DESC 
-LIMIT  10; 
+LIMIT  10; /* User input here */

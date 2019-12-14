@@ -31,7 +31,7 @@ WHERE  Year(tweet.created_at) = 2016
 GROUP  BY hname 
 ORDER  BY number_of_states DESC 
 LIMIT  10; */
-SET @year = 'year'; 
+SET @year = 'year'; /* User input here */
 
 SELECT Count(DISTINCT u.state_name)                       AS statenum, 
        Group_concat(DISTINCT u.state_name SEPARATOR ', ') AS states, 
@@ -46,7 +46,7 @@ FROM   hashtag h
 WHERE  Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year 
 GROUP  BY h.hname 
 ORDER  BY statenum DESC 
-LIMIT  5; 
+LIMIT  5; /* User input here */
 
 /*	Fix.
 	SELECT hashtagname, 

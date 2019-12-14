@@ -11,13 +11,13 @@
 	
 	• The value of k is between 1 and 100.
 */
-SET @state = 'Ohio'; 
+SET @state = 'Ohio'; /* User input here */
 
-SET @hashtag = 'Ohio'; 
+SET @hashtag = 'Ohio'; /* User input here, based from above. */
 
-SET @month = '1'; 
+SET @month = '1'; /* User input here */
 
-SET @year = '2016'; 
+SET @year = '2016'; /* User input here */
 
 SELECT t.tweet_text, 
        h.hname        AS hashtag_text, 
@@ -36,4 +36,4 @@ WHERE  h.hname = @hashtag
        AND u.state_name = @state 
        AND Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @year 
        AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @month 
-LIMIT  100; 
+LIMIT  100; /* User input here */
