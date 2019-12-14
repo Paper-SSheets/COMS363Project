@@ -36,11 +36,7 @@
 		String year = request.getParameter("year");
 
 		String sqlQuery = "";
-		stmt.conn.prepareStatement(sqlQuery);
 		
-		stmt.setString(1, listStates);
-		stmt.setString(2, month);
-		stmt.setString(2, year);
 
 		} catch(SQLException e) {
 			e.printStackTrace();
