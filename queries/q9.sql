@@ -11,3 +11,12 @@
 	
 	• The value of k is between 1 and 100.
 */
+SET @subcategory = 'GOP'; 
+
+SELECT u.screen_name, 
+       u.sub_category, 
+       u.numfollowers 
+FROM   user u 
+WHERE  u.sub_category = @subcategory 
+ORDER  BY u.numfollowers DESC 
+LIMIT  5; 

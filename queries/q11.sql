@@ -11,3 +11,29 @@
 	
 	• The value of k is between 1 and 100.
 */
+SET @state = 'Ohio'; 
+
+SET @hashtag = 'Ohio'; 
+
+SET @month = '1'; 
+
+SET @year = '2016'; 
+
+SELECT t.tweet_text, 
+       h.hname        AS hashtag_text, 
+       u.screen_name, 
+       u.sub_category AS subcategory 
+FROM   tweet t 
+       INNER JOIN tagged tag 
+               ON tag.tid = t.tid 
+       INNER JOIN hashtag h 
+               ON h.hname = tag.hashtag 
+       INNER JOIN user u 
+               ON u.screen_name = t.uscreen_name 
+WHERE  h.hname = @hashtag 
+       AND ( u.sub_category = 'GOP' 
+              OR u.sub_category = 'Democrat' ) 
+       AND u.state_name = @state 
+       AND Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @year 
+       AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @month 
+LIMIT  100; 

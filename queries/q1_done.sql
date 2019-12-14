@@ -12,6 +12,7 @@
 	
 	• The value of k is between 1 and 100.
 */
+/*
 SELECT retweet_count, 
        tweet_text, 
        user.screen_name, 
@@ -21,6 +22,16 @@ FROM   tweet
        INNER JOIN user 
                ON tweet.uscreen_name = user.screen_name 
 WHERE  Year(tweet.created_at) = 2016 /* User input here */ 
-       AND Month(tweet.created_at) = 01 /* User input here */ 
-ORDER  BY retweet_count DESC 
+/*       AND Month(tweet.created_at) = 01 /* User input here */ 
+/*ORDER  BY retweet_count DESC 
 LIMIT  10; /* User input here */
+
+/* test */
+SELECT * 
+FROM   tweet t 
+       INNER JOIN user u 
+               ON t.uscreen_name = u.screen_name 
+WHERE  Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = "2016" 
+       AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = "2" 
+ORDER  BY t.retweet_count DESC 
+LIMIT  10; 

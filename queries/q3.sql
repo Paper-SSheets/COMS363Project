@@ -18,6 +18,7 @@
 	
 	• The value of k is between 1 and 100.
 */
+/*
 SELECT hname, 
        Count(DISTINCT state_name)        AS number_of_states, 
        Group_concat(DISTINCT state_name) AS states_list 
@@ -29,7 +30,23 @@ FROM   hashtag
 WHERE  Year(tweet.created_at) = 2016
 GROUP  BY hname 
 ORDER  BY number_of_states DESC 
-LIMIT  10; 
+LIMIT  10; */
+SET @year = 'year'; 
+
+SELECT Count(DISTINCT u.state_name)                       AS statenum, 
+       Group_concat(DISTINCT u.state_name SEPARATOR ', ') AS states, 
+       h.hname                                            AS hashtag_text 
+FROM   hashtag h 
+       INNER JOIN tagged tag 
+               ON tag.hashtag = h.hname 
+       INNER JOIN tweet t 
+               ON t.tid = tag.tid 
+       INNER JOIN user u 
+               ON u.screen_name = t.uscreen_name 
+WHERE  Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year 
+GROUP  BY h.hname 
+ORDER  BY statenum DESC 
+LIMIT  5; 
 
 /*	Fix.
 	SELECT hashtagname, 

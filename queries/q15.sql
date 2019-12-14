@@ -10,7 +10,26 @@
 	
 	• The value of k is between 1 and 100.
 */
+SET @subcategory = 'GOP'; 
 
+SET @month = '1'; 
+
+SET @year = '2016'; 
+
+SELECT u.screen_name, 
+       u.state_name, 
+       Group_concat(url.address SEPARATOR ', ') AS URLs 
+FROM   user u 
+       INNER JOIN tweet t 
+               ON t.uscreen_name = u.screen_name 
+       INNER JOIN url_used 
+               ON url_used.tid = t.tid 
+       INNER JOIN url 
+               ON url.address = url_used.url 
+WHERE  u.sub_category = @subcategory 
+       AND Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @year 
+       AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @month 
+GROUP  BY u.screen_name; 
 
 
 /*	Fix.

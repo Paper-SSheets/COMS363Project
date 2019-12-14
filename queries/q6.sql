@@ -12,7 +12,21 @@
 */
 
 /* Code here. */
+SET @hashtags = 'GOPDebate, DemDebate'; /* User input here. */
 
+SELECT u.screen_name, 
+       u.state_name 
+FROM   user u 
+       INNER JOIN tweet t 
+               ON t.uscreen_name = u.screen_name 
+       INNER JOIN tagged tag 
+               ON tag.tid = t.tid 
+       INNER JOIN hashtag h 
+               ON h.hname = tag.hashtag 
+WHERE  Find_in_set(h.hname, @hashtags) 
+GROUP  BY u.screen_name 
+ORDER  BY u.numfollowers DESC 
+LIMIT  5; /* User input here. */
 
 
 /* 	Fix.

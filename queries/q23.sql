@@ -9,7 +9,30 @@
 	
 	• The value of k is between 1 and 100.
 */
+SET @subcategory = 'GOP'; 
 
+SET @months = '1, 2, 3'; 
+
+SET @year = '2016'; 
+
+SELECT h.hname                                               AS hashtag_text, 
+       Count(tag.hashtag)                                    AS num_uses, 
+       Month(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) AS post_month 
+FROM   hashtag h 
+       INNER JOIN tagged tag 
+               ON tag.hashtag = h.hname 
+       INNER JOIN tweet t 
+               ON t.tid = tag.tid 
+       INNER JOIN user u 
+               ON u.screen_name = t.uscreen_name 
+WHERE  u.sub_category = @subcategory && Find_in_set(Month( 
+                                        Str_to_date(t.created_at, 
+                                                    '%Y-%m-%d %H:%i:%s') 
+                                                           ), @months) 
+       AND Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year 
+GROUP  BY h.hname 
+ORDER  BY num_uses DESC 
+LIMIT  5; 
 
 
 /*	Fix.

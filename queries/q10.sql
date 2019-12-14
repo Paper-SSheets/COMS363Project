@@ -11,17 +11,25 @@
 	
 	• The value of k is between 1 and 100.
 */
-SELECT hname, 
-       Group_concat(DISTINCT ofstate) AS all_the_states 
-FROM   hashtag
-       INNER JOIN tweet 
-               ON tweet_hashtag.tid = tweet.tid 
-       INNER JOIN USER 
-               ON tweet.screen_name = USER.screen_name 
-WHERE  Find_in_set(ofstate, 'FL') != 0 /* User input here */
-       AND Year(tweet.posted) = 2016 /* User input here */
-       AND Month(tweet.posted) = 01 /* User input here */
-GROUP  BY hashtagname; 
+SET @states = 'Ohio, Alaska, Alabama'; 
+
+SET @month = '1'; 
+
+SET @year = '2016'; 
+
+SELECT h.hname                                           AS hashtag_text, 
+       Group_concat(DISTINCT u.state_name SEPARATOR ',') AS states 
+FROM   hashtag h 
+       INNER JOIN tagged tag 
+               ON tag.hashtag = h.hname 
+       INNER JOIN tweet t 
+               ON t.tid = tag.tid 
+       INNER JOIN user u 
+               ON u.screen_name = t.uscreen_name 
+WHERE  Find_in_set(u.state_name, @states) 
+       AND Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @year 
+       AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @month 
+GROUP  BY h.hname; 
 
 /* 	Fix.
 	SELECT hashtagname, 
