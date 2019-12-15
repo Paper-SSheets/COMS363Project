@@ -20,7 +20,7 @@
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
   
 			String k = (String) request.getParameter("amount");
-			String state = (String) request.getParameter("state);
+			String state = (String) request.getParameter("state");
 			String month = (String) request.getParameter("month");
 			String year = (String) request.getParameter("year");		
 			String hashtag = (String) request.getParameter("hashtag");
@@ -42,7 +42,10 @@
 			System.out.println(stmt3);
 			System.out.println(stmt4);
 			
-			
+			rs = stmt1.executeQuery();
+			rs = stmt2.executeQuery();
+			rs = stmt3.executeQuery();
+			rs = stmt4.executeQuery();
 			rs = stmt5.executeQuery();
 			System.out.println(rs);
 
