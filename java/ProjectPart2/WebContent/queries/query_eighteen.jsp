@@ -12,7 +12,11 @@
 	<%@ include file="../DBInfo.jsp"%>
 	<%
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement stmt2 = null;
+		PreparedStatement stmt3 = null;
+		PreparedStatement stmt4 = null;
+
 		ResultSet rs = null;
 
 		try {
@@ -20,7 +24,7 @@
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
 			String k = (String) request.getParameter("amount");
-			String sub_category = (String) request.getParameter("sub_category");
+			String sub_category = (String) request.getParameter("subcategory");
 			String month = (String) request.getParameter("month");
 			String year = (String) request.getParameter("year");
 
@@ -28,23 +32,24 @@
 			String sqlQuery1 = "SET @subcategory = '" + sub_category + "';";
 			String sqlQuery2 = "SET @month = '" + month + "';";
 			String sqlQuery3 = "SET @year = '" + year + "';";
-			String sqlQuery4 = "SELECT mentU.screen_name                                    AS mentionedUser, mentU.state_name                                     AS mentionedUserState, Group_concat(DISTINCT t.uscreen_name SEPARATOR ', ') AS postingUsers FROM   tweet t INNER JOIN mentioned AS ment ON ment.tid = t.tid INNER JOIN user AS ownU ON ownU.screen_name = t.uscreen_name INNER JOIN user AS mentU ON mentU.screen_name = ment.uscreen_name WHERE  ownU.sub_category = @subcategory AND Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year AND Month(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @month GROUP  BY mentU.screen_name ORDER  BY Count(ment.uscreen_name) DESC LIMIT  "+k+";";
+			String sqlQuery4 = "SELECT mentU.screen_name                                    AS mentionedUser, mentU.state_name                                     AS mentionedUserState, Group_concat(DISTINCT t.uscreen_name SEPARATOR ', ') AS postingUsers FROM   tweet t INNER JOIN mentioned AS ment ON ment.tid = t.tid INNER JOIN user AS ownU ON ownU.screen_name = t.uscreen_name INNER JOIN user AS mentU ON mentU.screen_name = ment.uscreen_name WHERE  ownU.sub_category = @subcategory AND Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year AND Month(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @month GROUP  BY mentU.screen_name ORDER  BY Count(ment.uscreen_name) DESC LIMIT  "
+					+ k + ";";
 
 			stmt1 = conn.prepareStatement(sqlQuery1);
 			stmt2 = conn.prepareStatement(sqlQuery2);
 			stmt3 = conn.prepareStatement(sqlQuery3);
 			stmt4 = conn.prepareStatement(sqlQuery4);
-			
+
 			System.out.println(stmt1);
 			System.out.println(stmt2);
 			System.out.println(stmt3);
 			System.out.println(stmt4);
-			
+
 			rs = stmt1.executeQuery();
 			rs = stmt2.executeQuery();
 			rs = stmt3.executeQuery();
 			rs = stmt4.executeQuery();
-			
+
 			System.out.println(rs);
 
 			while (rs.next()) {

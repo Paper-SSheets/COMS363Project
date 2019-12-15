@@ -5,45 +5,41 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <html>
 <head>
-<title>Query One</title>
+<title>Query Three</title>
 </head>
 <body>
-	<h1>Query 3</h1>
+	<h1>Query Three</h1>
 	<%@ include file="../DBInfo.jsp"%>
 	<%
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement stmt1 = null;
+		PreparedStatement stmt2 = null;
+
 		ResultSet rs = null;
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
-			// List k most retweeted tweets in a given month and a given year; show
-			//recent retweet count, the tweet text, the posting user's screen name,
-			//the posting user's category, the posting user's sub-category in a
-			// descending order of the retweet count values
-
-			//rs = stmt.executeQuery(sqlQuery);
-	%>
-	<!--  Here's the inputs -->
-
-	<%
-			String year = (String) request.getParameter("year");
 			String k = (String) request.getParameter("amount");
+			String year = (String) request.getParameter("year");
 
-			//String sqlQuery = "SELECT retweet_count, tweet_text, user.screen_name, category, sub_category FROM   tweet INNER JOIN user ON tweet.uscreen_name = user.screen_name WHERE  Year(tweet.created_at) = "
-			//		+ year + " AND Month(tweet.created_at) = " + month + " ORDER  BY retweet_count DESC LIMIT  " + k
-			//		+ ";";
-			
-			String sqlQuery = "";
-			stmt = conn.prepareStatement(sqlQuery);
-			System.out.println(stmt);
-			rs = stmt.executeQuery();
+			String sqlQuery1 = "SET @year = '" + year + "';";
+			String sqlQuery2 = "SELECT Count(DISTINCT u.state_name)                       AS statenum, Group_concat(DISTINCT u.state_name SEPARATOR ', ') AS states, h.hname                                            AS hashtag_text FROM   hashtag h INNER JOIN tagged tag ON tag.hashtag = h.hname INNER JOIN tweet t ON t.tid = tag.tid INNER JOIN user u ON u.screen_name = t.uscreen_name WHERE  u.state_name != \"na\" AND Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year GROUP  BY h.hname ORDER  BY statenum DESC LIMIT " + k +";";
+
+			stmt1 = conn.prepareStatement(sqlQuery1);
+			stmt2 = conn.prepareStatement(sqlQuery2);
+
+			System.out.println(stmt1);
+			System.out.println(stmt2);
+
+			rs = stmt1.executeQuery();
+			rs = stmt2.executeQuery();
+
 			System.out.println(rs);
 
 			while (rs.next()) {
-				out.println("<b>Number of states:</b>" + rs.getString("statenum") + "<br>");
+				out.println("<b>Number of states: </b>" + rs.getString("statenum") + "<br>");
 				out.println("<b>States:</b>" + rs.getString("states") + "<br>");
 				out.println("<b>Hashtag:</b>" + rs.getString("hashtag_text") + "<br>");
 				out.println("<hr>");
@@ -53,4 +49,4 @@
 		}
 	%>
 </body>
-</html>
+<

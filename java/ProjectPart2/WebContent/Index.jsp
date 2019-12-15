@@ -90,8 +90,9 @@
 			
 			<h3>query 23</h3>
 			<form action="./queries/query_twenty_three.jsp">
+			Amount: <input type="number" name="amount">
 			Year: <input type="number" name="year">
-			List of months: <input type="text" name="list_of_months"><br>
+			List of months: <input type="text" name="months"><br>
 			Sub_catagory: <input type="text" name="sc"><br>
 			<input type="submit" value="GO">
 			</form>

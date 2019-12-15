@@ -29,7 +29,7 @@
 			String year = (String) request.getParameter("year");
 			String hashtag = (String) request.getParameter("hashtag");
 
-			System.out.println("k" + k + "state" + state + "month" + month +" year" +  year + "hash" + hashtag);
+			System.out.println("k" + k + "state" + state + "month" + month + " year" + year + "hash" + hashtag);
 			String sqlQuery1 = "SET @state = '" + state + "';";
 			String sqlQuery2 = "SET @hashtag = '" + hashtag + "';";
 			String sqlQuery3 = "SET @month = '" + month + "';";
