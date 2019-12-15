@@ -30,6 +30,7 @@
 - Worked on pairing JDBC with SQL queries.
 - Worked on cleaning up JSP.
 - Worked on Query Optimization section.
+- Worked on docs.
 - Lots of code cleanup.
 - Optimizations.
 - Peer evaluations.
