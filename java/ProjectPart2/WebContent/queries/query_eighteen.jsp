@@ -5,35 +5,56 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <html>
 <head>
-<title> Query Eighteen </title>
+<title>Query 18</title>
 </head>
 <body>
-<h1> Query Eighteen</h1>
-	<%@ include file="../DBInfo.jsp" %>
+	<h1>Query 18</h1>
+	<%@ include file="../DBInfo.jsp"%>
 	<%
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
-				
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-			stmt = conn.createStatement();
-		 	//rs = stmt.executeQuery(sqlQuery);
-	%>
-	<!--  Here's the inputs -->	
-	<form>
-		Amount of tweets: <input type="number" year="category"><br>
-		Sub-category (e.g. GOP): <input type="text" year="category"><br>
-		Month (Integer: 1 - 12): <input type="number" year="category"><br>
-		Year: <input type="number" year="category"><br>
-		<input type="submit" value="Submit">
-		<input type="submit" value="Back" action="../Index.jsp">
-	</form>
-	<% 
-		} catch(SQLException e) {
+
+			String k = (String) request.getParameter("amount");
+			String sub_category = (String) request.getParameter("sub_category");
+			String month = (String) request.getParameter("month");
+			String year = (String) request.getParameter("year");
+
+			System.out.println(k + "---" + sub_category + "---" + year + "---" + month);
+			String sqlQuery1 = "SET @subcategory = '" + sub_category + "';";
+			String sqlQuery2 = "SET @month = '" + month + "';";
+			String sqlQuery3 = "SET @year = '" + year + "';";
+			String sqlQuery4 = "SELECT mentU.screen_name                                    AS mentionedUser, mentU.state_name                                     AS mentionedUserState, Group_concat(DISTINCT t.uscreen_name SEPARATOR ', ') AS postingUsers FROM   tweet t INNER JOIN mentioned AS ment ON ment.tid = t.tid INNER JOIN user AS ownU ON ownU.screen_name = t.uscreen_name INNER JOIN user AS mentU ON mentU.screen_name = ment.uscreen_name WHERE  ownU.sub_category = @subcategory AND Year(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @year AND Month(Str_to_date(t.created_at, '%Y-%m-%d %H:%i:%s')) = @month GROUP  BY mentU.screen_name ORDER  BY Count(ment.uscreen_name) DESC LIMIT  "+k+";";
+
+			stmt1 = conn.prepareStatement(sqlQuery1);
+			stmt2 = conn.prepareStatement(sqlQuery2);
+			stmt3 = conn.prepareStatement(sqlQuery3);
+			stmt4 = conn.prepareStatement(sqlQuery4);
+			
+			System.out.println(stmt1);
+			System.out.println(stmt2);
+			System.out.println(stmt3);
+			System.out.println(stmt4);
+			
+			rs = stmt1.executeQuery();
+			rs = stmt2.executeQuery();
+			rs = stmt3.executeQuery();
+			rs = stmt4.executeQuery();
+			
+			System.out.println(rs);
+
+			while (rs.next()) {
+				out.println("<b>mentionedUser:</b>" + rs.getString("mentionedUser") + "<br>");
+				out.println("<b>mentionedUserState:</b>" + rs.getString("mentionedUserState") + "<br>");
+				out.println("<b>postingUsers:</b>" + rs.getString("postingUsers") + "<br>");
+				out.println("<hr>");
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Something");
 		}
 	%>
 </body>

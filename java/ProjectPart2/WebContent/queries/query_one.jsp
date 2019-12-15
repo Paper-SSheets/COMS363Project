@@ -18,10 +18,8 @@
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-	%>
 
-	<%
-		String year = (String) request.getParameter("year");
+			String year = (String) request.getParameter("year");
 			String month = (String) request.getParameter("month");
 			String k = (String) request.getParameter("amount");
 
