@@ -11,130 +11,203 @@
 	<%@ include file="./DBInfo.jsp"%>
 	<%
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
-		// Java way for handling an error using try catch
+		Class.forName("com.mysql.jdbc.Driver");
+		
+		if(session.getAttribute("username") == null && session.getAttribute("password") == null) {
+			session.setAttribute("username", (String) request.getParameter("username"));
+			session.setAttribute("password", (String) request.getParameter("password"));
+		}
+		
+		System.out.println("get attr "+ session.getAttribute("username"));
+		System.out.println("get attr "+ session.getAttribute("password"));
+
+		System.out.println("get param" + request.getParameter("username"));
+		System.out.println("get param" + request.getParameter("password"));
+
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-			stmt = conn.createStatement();
+				
+			String checkValidity = "SELECT upassword, privilege FROM appusers where login_name = '" + session.getAttribute("username") + "';";
+			stmt = conn.prepareStatement(checkValidity);
+			rs = stmt.executeQuery();
 
-			// show example how to use Statement object for static SQL statements
+			// Gets rid of titles of columns	
+			rs.next();
+
+			// Grabs password hash	
+			String encryptedPassword = rs.getString("upassword");
+
+			// Grabs whether or not admin
+			String is_admin = rs.getString("privilege");
+
+			System.out.println(is_admin);
+
+			// Decrypts password 
+			checkValidity = "SELECT sha1('" + (String) session.getAttribute("password")+"') as dopePassword";
+
+			// System.out.println(session.getAttribute("password"));
 			
-			// Put SQL query here
-			//String sqlQuery = "SELECT f.FID, f.FNAME FROM food f";
+			stmt = conn.prepareStatement(checkValidity);
+			rs = stmt.executeQuery();
 
-			//rs = stmt.executeQuery(sqlQuery);
+			rs.next();
+			
+			String enteredPassword = rs.getString("dopePassword");
+
+			if (encryptedPassword.equals(enteredPassword)) {
+				out.println("What's poppin', " + (String) session.getAttribute("username") + "\n Privileges: "  + is_admin);
+				session.setAttribute("is_admin", is_admin);
+			} else {
+				System.out.println("Had to set attributes to null");
+				session.setAttribute("is_admin", null);
+				session.setAttribute("username", null);
+				session.setAttribute("password", null);
+
+				throw new Exception("Incorrect password");
+			}
+
 	%>
+
+			<!-- Query 1 -->	
 			<h3>query 1</h3>
+
 			<form action="./queries/query_one.jsp">
-			Amount: <input type="number" name="amount"><br>
-			Month: <input type="number" name="month"><br>
-			Year: <input type="number" name="year">
-			<input type="submit" value="GO">
+				Amount: <input type="number" name="amount"><br>
+				Month: <input type="number" name="month"><br>
+				Year: <input type="number" name="year">
+
+				<input type="submit" value="GO">
 			</form>
 
+			<!-- Query 3 -->	
 
 			<h3>query 3</h3>
+
 			<form action="./queries/query_three.jsp">
-			Amount: <input type="number" name="amount"><br>
-			Year: <input type="number" name="year">
-			<input type="submit" value="GO">
+				Amount: <input type="number" name="amount"><br>
+				Year: <input type="number" name="year">
+
+				<input type="submit" value="GO">
 			</form>
+
+			<!-- Query 6 -->	
 
 			<h3>query 6</h3>
+
 			<form action="./queries/query_six.jsp">
-			Amount: <input type="number" name="amount"><br>
-			hashtag_list: <input type="text" name="hashtaglist">
-			<input type="submit" value="GO">
+				Amount: <input type="number" name="amount"><br>
+				hashtag_list: <input type="text" name="hashtaglist">
+
+				<input type="submit" value="GO">
 			</form>
 
-
+			<!-- Query 10 -->	
 
 			<h3>query 10</h3>
+
 			<form action="./queries/query_ten.jsp">
-			Month: <input type="number" name="month"><br>
-			Year: <input type="number" name="year">
-			list_of_states: <input type="text" name="list_of_states">
-			<input type="submit" value="GO">
+				Month: <input type="number" name="month"><br>
+				Year: <input type="number" name="year">
+				list_of_states: <input type="text" name="list_of_states">
+
+				<input type="submit" value="GO">
 			</form>
 
+			<!-- Query 11 -->	
 			<h3>query 11</h3>
+
 			<form action="./queries/query_eleven.jsp">
-			Amount: <input type="number" name="amount"><br>
-			Month: <input type="number" name="month"><br>
-			Year: <input type="number" name="year">
-			State: <input type="text" name="state">
-			Hashtag <input type="text" name="hashtag">
-			<input type="submit" value="GO">
+				Amount: <input type="number" name="amount"><br>
+				Month: <input type="number" name="month"><br>
+				Year: <input type="number" name="year">
+				State: <input type="text" name="state">
+				Hashtag <input type="text" name="hashtag">
+
+				<input type="submit" value="GO">
 			</form>
 			
+			<!-- Query 15 -->	
+
 			<h3>query 15</h3>
+
 			<form action="./queries/query_fifteen.jsp">
-			Month: <input type="number" name="month"><br>
-			Year: <input type="number" name="year">
-			Sub_catagory: <input type="text" name="sc"><br>
-			<input type="submit" value="GO">
+				Month: <input type="number" name="month"><br>
+				Year: <input type="number" name="year">
+				Sub_catagory: <input type="text" name="sc"><br>
+
+				<input type="submit" value="GO">
 			</form>
 
+			<!--  Query 18 -->	
 			<h3>query 18</h3>
+
 			<form action="./queries/query_eighteen.jsp">
-			Amount: <input type="number" name="amount"><br>
-			Month: <input type="number" name="month"><br>
-			Year: <input type="number" name="year">
-			Sub-category: <input type="text" name="subcategory"><br>
+				Amount: <input type="number" name="amount"><br>
+				Month: <input type="number" name="month"><br>
+				Year: <input type="number" name="year">
+				Sub-category: <input type="text" name="subcategory"><br>
 			
-			<input type="submit" value="GO">
+				<input type="submit" value="GO">
 			</form>
-			
+
+			<!--  Query 23 -->	
 			<h3>query 23</h3>
+
 			<form action="./queries/query_twenty_three.jsp">
-			Amount: <input type="number" name="amount">
-			Year: <input type="number" name="year">
-			List of months: <input type="text" name="months"><br>
-			Sub_catagory: <input type="text" name="sc"><br>
-			<input type="submit" value="GO">
+				Amount: <input type="number" name="amount">
+				Year: <input type="number" name="year">
+				List of months: <input type="text" name="months"><br>
+				Sub_catagory: <input type="text" name="sc"><br>
+
+				<input type="submit" value="GO">
 			</form>
 
+			<!--  Insert user - I.jsp-->
 
-			<h3>I</h3>
-			<form action="I.jsp">
-			screen name: <input type="text" name="screen_name"><br>
-			name: <input type="text" name="name">
-			category: <input type="text" name="category"><br>
-			sub category: <input type="text" name="sub_category"><br>
-			of state: <input type="text" name="ofstate"><br>
-			num of followers: <input type="number" name="numfollowers"><br>
-			num following: <input type="number" name="numfollowing"><br>
-			location: <input type="text" name="location"><br>
-			<input type="submit" value="GO">
+			<h3>Insert User</h3>
+
+			<form action="./queries/I.jsp">
+				Twitter username: <input type="text" name="screen_name"><br>
+				Name: <input type="text" name="name">
+				Category: <input type="text" name="category"><br>
+				Subcategory: <input type="text" name="sub_category"><br>
+				State name: <input type="text" name="state_name"><br>
+				Number of followers: <input type="number" name="num_followers"><br>
+				Number following: <input type="number" name="num_following"><br>
+
+				<input type="submit" value="GO">
 			</form>
 
+			<!--  Delete user - D.jsp-->
 			<h3>D</h3>
+
 			<form action="D.jsp">
-			screen name: <input type="text" name="screen_name"><br>
-			<input type="submit" value="GO">
+				Twitter username: <input type="text" name="screen_name"><br>
+
+				<input type="submit" value="GO">
 			</form>
 
 			<a href="">  </a>
-			<!-- the form method can be get or post
-				but post does not let anyone see the parameter values that are passed between pages
-				Use post for sensitive information
-			-->
+			
 	
 			<p></p>
 			<input type="submit" value="GO">
-			</form>
 	<%
-			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			out.println("An exception occurred: " + e.getMessage());
 		} finally {
-			if (rs!= null) rs.close();
-			if (stmt!= null) stmt.close();
+			if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
 			if (conn != null) conn.close();
+			
 		}
 	%>
+
+	<form action="login.jsp">
+		<input type="submit" value="BACK"/>
+	 </form>
 </body>
 </html>
