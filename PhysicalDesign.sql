@@ -116,3 +116,8 @@ END IF;
 END;//
    
 delimiter ;
+
+CREATE INDEX retweetCountIndex /* Q1 Optimization */
+ON Tweet(retweet_count);
+
+CREATE INDEX subCategoryIndex ON User(sub_category); /* Q9 Optimization */
