@@ -30,17 +30,3 @@ WHERE  Find_in_set(u.state_name, @states)
        AND Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @year 
        AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @month 
 GROUP  BY h.hname; 
-
-/* 	Fix.
-	SELECT hashtagname, 
-		   Group_concat(DISTINCT ofstate) AS all_the_states 
-	FROM   tweet_hashtag 
-		   INNER JOIN tweet 
-				   ON tweet_hashtag.tid = tweet.tid 
-		   INNER JOIN USER 
-				   ON tweet.screen_name = USER.screen_name 
-	WHERE  Find_in_set(ofstate, ?) != 0 
-		   AND Year(tweet.posted) = ? 
-		   AND Month(tweet.posted) = ? 
-	GROUP  BY hashtagname; 
-*/

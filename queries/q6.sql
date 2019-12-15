@@ -27,22 +27,3 @@ WHERE  Find_in_set(h.hname, @hashtags)
 GROUP  BY u.screen_name 
 ORDER  BY u.num_followers DESC 
 LIMIT  5; /* User input here. */
-
-
-/* 	Fix.
-	SELECT * 
-	FROM   (SELECT user.numfollowers, 
-				   user.screen_name, 
-				   Group_concat(DISTINCT hashtagname) AS all_hashtags 
-			FROM   tweet_hashtag 
-				   INNER JOIN tweet 
-						   ON tweet_hashtag.tid = tweet.tid 
-				   INNER JOIN user 
-						   ON tweet.screen_name = user.screen_name 
-			WHERE  Find_in_set(hashtagname, ?) != 0 
-			GROUP  BY user.screen_name) AS x 
-	WHERE  Length(all_hashtags) - Length(REPLACE(all_hashtags, ',', '')) = 
-		   Length(?) - Length(REPLACE(?, ',', '')) 
-	ORDER  BY numfollowers DESC 
-	LIMIT  10; 
-*/

@@ -1,3 +1,5 @@
 # COMS363Project
-
-This is hard. :()
+## Team Members
+- Steven Sheets
+- Dylan Smith
+- Andrew Marek

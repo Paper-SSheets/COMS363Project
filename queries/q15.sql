@@ -31,18 +31,3 @@ WHERE  u.sub_category = @subcategory
        AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @month 
 GROUP  BY u.screen_name 
 LIMIT  100; /* User input here */
-
-/*	Fix.
-	SELECT USER.screen_name, 
-		   ofstate, 
-		   Group_concat(url) AS urls 
-	FROM   tweet_url 
-		   INNER JOIN tweet 
-				   ON tweet_url.tid = tweet.tid 
-		   INNER JOIN USER 
-				   ON tweet.screen_name = USER.screen_name 
-	WHERE  Year(tweet.posted) = ? 
-		   AND Month(tweet.posted) = ? 
-		   AND USER.sub_category = ? 
-	GROUP  BY USER.screen_name; 
-*/

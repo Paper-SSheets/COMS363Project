@@ -31,4 +31,18 @@
 - Worked on cleaning up JSP.
 - Worked on Query Optimization section.
 - Lots of code cleanup.
+- Optimizations.
 - Peer evaluations.
+
+
+
+Confirm The Following Work:
+- query_one.jsp ✔️
+- query_three.jsp ✔️
+- query_six.jsp ✔️
+- query_nine.jsp ✔️
+- query_ten.jsp ✔️
+- query_eleven.jsp ✔️
+- query_fifteen.jsp ✔️
+- query_eighteen.jsp ✔️
+- query_twenty_three.jsp ✔️

@@ -33,20 +33,3 @@ WHERE  u.sub_category = @subcategory && Find_in_set(Month(
 GROUP  BY h.hname 
 ORDER  BY num_uses DESC 
 LIMIT  5; /* User input here */
-
-
-/*	Fix.
-	SELECT hashtagname, 
-		   Count(DISTINCT tweet_hashtag.tid) AS count_of_tweets 
-	FROM   tweet_hashtag 
-		   INNER JOIN tweet 
-				   ON tweet_hashtag.tid = tweet.tid 
-		   INNER JOIN user 
-				   ON tweet.screen_name = user.screen_name 
-	WHERE  user.sub_category =? 
-		   AND Year(tweet.posted) = ? 
-		   AND Find_in_set(Month(tweet.posted), ?) != 0 
-	GROUP  BY hashtagname 
-	ORDER  BY count_of_tweets DESC 
-	LIMIT  10; 
-*/
