@@ -5,35 +5,56 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <html>
 <head>
-<title> Query Ten </title>
+<title>Query Eleven</title>
 </head>
 <body>
-<h1> Query Ten</h1>
-	<%@ include file="../DBInfo.jsp" %>
+	<h1>Query Eleven</h1>
+	<%@ include file="../DBInfo.jsp"%>
 	<%
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
-				
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-			stmt = conn.createStatement();
-		 	//rs = stmt.executeQuery(sqlQuery);
-	%>
-	<!--  Here's the inputs -->	
-	<form>
-		Amount of tweets: <input type="number" year="category"><br>
-		State (e.g. Ohio): <input type="text" year="category"><br>
-		Month (Integer: 1 - 12): <input type="number" year="category"><br>
-		Year: <input type="number" year="category"><br>
-		<input type="submit" value="Submit">
-		<input type="submit" value="Back" action="../Index.jsp">
-	</form>
-	<% 
-		} catch(SQLException e) {
+  
+			String k = (String) request.getParameter("amount");
+			String state = (String) request.getParameter("state);
+			String month = (String) request.getParameter("month");
+			String year = (String) request.getParameter("year");		
+			String hashtag = (String) request.getParameter("hashtag");
+
+			System.out.println(k + state + month + year + hashtag);
+			String sqlQuery1 = "SET @state = '" + state + "';";
+			String sqlQuery2 = "SET @hashtag = '" + hashtag + "';";
+			String sqlQuery3 = "SET @month = '" + month + "';";
+			String sqlQuery4 = "SET @year = '" + year + "';";
+			String sqlQuery5 = "SELECT t.tweet_text, h.hname        AS hashtag_text, u.screen_name, u.sub_category AS subcategory FROM   tweet t INNER JOIN tagged tag ON tag.tid = t.tid INNER JOIN hashtag h ON h.hname = tag.hashtag INNER JOIN user u ON u.screen_name = t.uscreen_name WHERE  h.hname = @hashtag AND ( u.sub_category = 'GOP' OR u.sub_category = 'Democrat' ) AND u.state_name = @state AND Year(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @year AND Month(Str_to_date(created_at, '%Y-%m-%d %H:%i:%s')) = @month LIMIT  "+k+";";
+
+			stmt1 = conn.prepareStatement(sqlQuery1);
+			stmt2 = conn.prepareStatement(sqlQuery2);
+			stmt3 = conn.prepareStatement(sqlQuery3);
+			stmt4 = conn.prepareStatement(sqlQuery4);
+
+			System.out.println(stmt1);
+			System.out.println(stmt2);
+			System.out.println(stmt3);
+			System.out.println(stmt4);
+			
+			
+			rs = stmt5.executeQuery();
+			System.out.println(rs);
+
+			while (rs.next()) {
+				out.println("<b>tweet_text:</b>" + rs.getString("tweet_text") + "<br>");
+				out.println("<b>hashtag_text:</b>" + rs.getString("hashtag_text") + "<br>");
+				out.println("<b>screen_name:</b>" + rs.getString("screen_name") + "<br>");
+				out.println("<b>sub_category:</b>" + rs.getString("sub_category") + "<br>");
+				out.println("<hr>");
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Something");
 		}
 	%>
 </body>
