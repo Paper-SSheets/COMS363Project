@@ -18,16 +18,7 @@
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-
-			// List k most retweeted tweets in a given month and a given year; show
-			//recent retweet count, the tweet text, the posting user's screen name,
-			//the posting user's category, the posting user's sub-category in a
-			// descending order of the retweet count values
-
-			//rs = stmt.executeQuery(sqlQuery);
-			//test
 	%>
-	<!--  Here's the inputs -->  /fjsadladslkfjlskd
 
 	<%
 		String year = (String) request.getParameter("year");

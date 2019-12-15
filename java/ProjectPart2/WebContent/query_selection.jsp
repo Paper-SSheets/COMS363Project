@@ -137,32 +137,7 @@
 			<input type="submit" value="GO">
 			</form>
 		<%		
-		
 
-		
-		// sqlQuery = "select i.INAME, r.AMOUNT from food f inner join recipe r on r.FID = f.FID inner join ingredient i on i.IID = r.IID where f.FID = ?";
-		
-		// stmt = conn.prepareStatement(sqlQuery);
-		// stmt.clearParameters();
-		
-		// this works as seen in a previous example
-		// stmt.setInt(1,Integer.parseInt(request.getParameter("food_selector")));
-		
-		// the method does some conversion for us
-		// stmt.setString(1, request.getParameter("food_selector"));
-		
-		// rs = stmt.executeQuery();
-		// out.println("<table><tr><th>Ingredient</th><th>Amount</th></tr>");
-		// while (rs.next()) {
-		// 	out.println("<tr>");
-		// 	out.println("<td>" + rs.getString("INAME") + "</td>");
-		// 	out.println("<td>" + rs.getInt("AMOUNT") + "</td>");
-		// 	out.println("</tr>");
-		// }
-		// out.println("</table>");
-		
-		// rs.close();
-		// stmt.close();
 		conn.close();
 		} catch (Exception e){
 			out.println("ERROR: check your username and password and permissions");

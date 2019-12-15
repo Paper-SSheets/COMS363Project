@@ -65,14 +65,13 @@
 			Amount: <input type="number" name="amount"><br>
 			Month: <input type="number" name="month"><br>
 			Year: <input type="number" name="year">
-			State: <input type="text" name="list_of_states">
+			State: <input type="text" name="state">
 			Hashtag <input type="text" name="hashtag">
 			<input type="submit" value="GO">
 			</form>
 			
 			<h3>query 15</h3>
 			<form action="./queries/query_fifteen.jsp">
-			Amount: <input type="number" name="amount"><br>
 			Month: <input type="number" name="month"><br>
 			Year: <input type="number" name="year">
 			Sub_catagory: <input type="text" name="sc"><br>
